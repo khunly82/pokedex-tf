@@ -1,0 +1,45 @@
+<p-table [value]="pokemons" [paginator]="true" [rows]="20">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>N°</th>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Favori</th>
+            <th>Stats</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pokemon>
+        <tr>
+            <td>{{pokemon.id}}</td>
+            <td><img [src]="pokemon.id|pokemonImage"></td>
+            <td>{{pokemon.name.french|titlecase}}</td>
+            <td>
+                @for(t of pokemon.type; track t) {
+                    <app-type class="mx-1" [type]="t"></app-type>
+                }
+            </td>
+            <td>
+                <i class="pi"
+                   [ngClass]="{ 
+                    'pi-heart': !pokemon.favori, 
+                    'pi-heart-fill': pokemon.favori 
+                    }"
+                   (click)="toggleFavorite(pokemon)"></i>
+            </td>
+            <td>
+                <p-button label="Stat" 
+                          icon="pi pi-chart-bar" 
+                          [outlined]="true"
+                          size="small"
+                          [disabled]="selectedItems.includes(pokemon)"
+                          (onClick)="addToStats(pokemon)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<div class="stats" [ngClass]="{ open: selectedItems.length > 0 }">
+    <i class="pi pi-times" (click)="selectedItems = []"></i>
+    <p-chart type="radar" [data]="data"></p-chart>
+</div>
