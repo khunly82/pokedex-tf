@@ -1,22 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { pokedex } from '../../pokedex';
+import { Component } from '@angular/core';
+import pokedex from '../../pokedex.json';
 import { MessageService } from 'primeng/api';
 
 @Component({
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   pokemons: any[] = pokedex;
   
   selectedItems: any[] = [];
 
-  data: any = {
-    labels: ["HP","Attack","Defense","Sp. Attack","Sp. Defense","Speed"],
-    datasets: [
-      { label : 'pikachu', borderColor: 'yellow', data: [1,2,1,5,1,3] }
-    ]
-  }
+  data: any;
 
   colors: string[] = [
     'red', 'blue', 'green', 'yellow', 'pink'
@@ -24,10 +19,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private messageService: MessageService
-  ) {}
-
-  ngOnInit(): void {
-    
+  ) {
   }
 
   toggleFavorite(pokemon: any) {
